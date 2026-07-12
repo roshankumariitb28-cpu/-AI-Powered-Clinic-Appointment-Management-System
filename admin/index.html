@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Shree Neuro &amp; Dental Health Care</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Admin Styles -->
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     LOGIN SCREEN
+══════════════════════════════════════════ -->
+<div id="loginScreen" style="display:flex;">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-icon"><i class="fa-solid fa-hospital"></i></div>
+      <div class="login-logo-text">
+        <h2>Shree Neuro &amp; Dental</h2>
+        <p>Admin Panel — Secure Access</p>
+      </div>
+    </div>
+    <h3 class="login-title">Welcome Back</h3>
+    <p class="login-sub">Sign in to manage your clinic appointments</p>
+
+    <div class="login-error" id="loginError"></div>
+
+    <div class="login-field">
+      <label for="loginUser">Username</label>
+      <input type="text" id="loginUser" placeholder="admin" autocomplete="username" />
+    </div>
+    <div class="login-field">
+      <label for="loginPass">Password</label>
+      <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password" />
+    </div>
+
+    <button class="btn-login" id="loginBtn">
+      <i class="fa-solid fa-right-to-bracket"></i> Sign In to Dashboard
+    </button>
+
+    <p style="text-align:center;font-size:0.78rem;color:#6B7FA0;margin-top:20px;">
+      Default: <code>admin</code> / <code>shree2026</code>
+    </p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     MAIN LAYOUT
+══════════════════════════════════════════ -->
+
+<!-- ── Sidebar ── -->
+<aside id="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-icon"><i class="fa-solid fa-hospital"></i></div>
+    <div class="sidebar-brand-text">
+      <h2>Shree Clinic</h2>
+      <p>Admin Dashboard</p>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="sidebar-section-label">Main</div>
+
+    <button class="sidebar-link active" data-view="dashboard">
+      <span class="nav-icon"><i class="fa-solid fa-gauge-high"></i></span>
+      Dashboard
+    </button>
+
+    <button class="sidebar-link" data-view="appointments">
+      <span class="nav-icon"><i class="fa-solid fa-calendar-check"></i></span>
+      Appointments
+      <span class="nav-badge pend-badge" style="display:none">0</span>
+    </button>
+
+    <button class="sidebar-link" data-view="calendar">
+      <span class="nav-icon"><i class="fa-solid fa-calendar-days"></i></span>
+      Calendar View
+    </button>
+
+    <div class="sidebar-section-label">System</div>
+
+    <button class="sidebar-link" data-view="settings">
+      <span class="nav-icon"><i class="fa-solid fa-gear"></i></span>
+      Settings
+    </button>
+
+    <div class="sidebar-section-label">AI &amp; Analytics</div>
+
+    <button class="sidebar-link" data-view="ai-chats">
+      <span class="nav-icon"><i class="fa-solid fa-robot"></i></span>
+      AI Conversations
+      <span class="nav-badge" id="ai-chat-badge" style="display:none">0</span>
+    </button>
+
+    <button class="sidebar-link" data-view="analytics">
+      <span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span>
+      Analytics
+    </button>
+
+    <a href="../appointment.html" class="sidebar-link" target="_blank">
+      <span class="nav-icon"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+      Booking Page
+    </a>
+
+    <a href="../index.html" class="sidebar-link" target="_blank">
+      <span class="nav-icon"><i class="fa-solid fa-globe"></i></span>
+      View Website
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <button class="sidebar-link" id="logoutBtn">
+      <span class="nav-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+      Logout
+    </button>
+  </div>
+</aside>
+
+<!-- ── Main Content ── -->
+<main id="mainContent">
+
+  <!-- Top Bar -->
+  <div class="adm-topbar">
+    <div class="topbar-left">
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div>
+        <div class="topbar-title" id="topbarTitle">Dashboard Overview</div>
+        <div class="topbar-subtitle" id="topbarSubtitle">Welcome back, Admin</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-time" id="topbarTime">—</div>
+      <div class="topbar-badge"><i class="fa-solid fa-shield-halved" style="margin-right:6px"></i>Admin</div>
+    </div>
+  </div>
+
+  <!-- ════ PAGE: DASHBOARD ════ -->
+  <div class="adm-page active" id="page-dashboard">
+
+    <!-- Stats Row -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
+        <div class="stat-content">
+          <div class="stat-value" id="stat-total">0</div>
+          <div class="stat-label">Total Appointments</div>
+          <div class="stat-trend"><i class="fa-solid fa-chart-line"></i> All time</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-calendar-day"></i></div>
+        <div class="stat-content">
+          <div class="stat-value" id="stat-today">0</div>
+          <div class="stat-label">Today's Appointments</div>
+          <div class="stat-trend"><i class="fa-solid fa-sun"></i> Today</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+        <div class="stat-content">
+          <div class="stat-value" id="stat-pending">0</div>
+          <div class="stat-label">Pending Confirmation</div>
+          <div class="stat-trend" style="color:var(--clr-orange)"><i class="fa-solid fa-circle-exclamation"></i> Needs action</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div>
+        <div class="stat-content">
+          <div class="stat-value" id="stat-completed">0</div>
+          <div class="stat-label">Completed</div>
+          <div class="stat-trend"><i class="fa-solid fa-flag-checkered"></i> Done</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="mini-charts">
+      <!-- Weekly Bar Chart -->
+      <div class="chart-card">
+        <div class="chart-card-title"><i class="fa-solid fa-chart-bar"></i> Appointments — Last 7 Days</div>
+        <div class="bar-chart" id="weeklyChart"></div>
+      </div>
+      <!-- Dept Donut -->
+      <div class="chart-card">
+        <div class="chart-card-title"><i class="fa-solid fa-chart-pie"></i> Department Breakdown</div>
+        <div class="donut-wrap">
+          <svg id="deptDonut" class="donut-chart" viewBox="0 0 110 110"></svg>
+          <div class="donut-legend">
+            <div class="legend-item">
+              <div class="legend-dot" style="background:var(--clr-primary)"></div>
+              <span class="legend-label">Neurology</span>
+              <span class="legend-val" id="deptNeuroVal">0</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:var(--clr-accent)"></div>
+              <span class="legend-label">Dental</span>
+              <span class="legend-val" id="deptDentalVal">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Status Chart -->
+      <div class="chart-card">
+        <div class="chart-card-title"><i class="fa-solid fa-circle-half-stroke"></i> Status Overview</div>
+        <div class="donut-wrap">
+          <svg id="statusDonut" class="donut-chart" viewBox="0 0 110 110"></svg>
+          <div class="donut-legend">
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#F97316"></div>
+              <span class="legend-label">Pending</span>
+              <span class="legend-val" id="sval-pending">0</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:var(--clr-primary)"></div>
+              <span class="legend-label">Confirmed</span>
+              <span class="legend-val" id="sval-confirmed">0</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:var(--clr-green)"></div>
+              <span class="legend-label">Completed</span>
+              <span class="legend-val" id="sval-completed">0</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:var(--clr-red)"></div>
+              <span class="legend-label">Cancelled</span>
+              <span class="legend-val" id="sval-cancelled">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Quick Actions -->
+      <div class="chart-card">
+        <div class="chart-card-title"><i class="fa-solid fa-bolt"></i> Quick Actions</div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
+          <button class="btn-adm btn-adm-primary" onclick="exportCSV()">
+            <i class="fa-solid fa-file-csv"></i> Export All to CSV
+          </button>
+          <button class="btn-adm btn-adm-outline" onclick="showView('appointments')">
+            <i class="fa-solid fa-calendar-check"></i> Manage Appointments
+          </button>
+          <button class="btn-adm btn-adm-outline" onclick="showView('calendar')">
+            <i class="fa-solid fa-calendar-days"></i> Open Calendar
+          </button>
+          <a href="../appointment.html" class="btn-adm btn-adm-outline" target="_blank" style="text-decoration:none;color:inherit;">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> View Booking Page
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Appointments -->
+    <div class="adm-panel">
+      <div class="adm-panel-header">
+        <div class="adm-panel-title">
+          <i class="fa-solid fa-clock-rotate-left"></i> Recent Appointments
+        </div>
+        <button class="btn-adm btn-adm-outline" onclick="showView('appointments')">
+          View All <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+      <div class="adm-table-wrap">
+        <table class="adm-table">
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Patient</th>
+              <th>Department</th>
+              <th>Date &amp; Time</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="recentTableBody">
+            <tr><td colspan="6">
+              <div class="empty-state">
+                <i class="fa-solid fa-inbox"></i>
+                <h3>No appointments yet</h3>
+                <p>Bookings made via the website will appear here.</p>
+              </div>
+            </td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /page-dashboard -->
+
+  <!-- ════ PAGE: APPOINTMENTS ════ -->
+  <div class="adm-page" id="page-appointments">
+    <div class="adm-panel">
+      <div class="adm-panel-header">
+        <div class="adm-panel-title">
+          <i class="fa-solid fa-calendar-check"></i> All Appointments
+        </div>
+        <div class="filter-bar">
+          <div class="search-input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" class="adm-search" id="apptSearch" placeholder="Search by name, phone, ID…" />
+          </div>
+          <select class="adm-filter-select" id="apptDeptFilter">
+            <option value="">All Departments</option>
+            <option value="neuro">Neurology</option>
+            <option value="dental">Dental</option>
+          </select>
+          <select class="adm-filter-select" id="apptStatusFilter">
+            <option value="">All Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+          <select class="adm-filter-select" id="apptSortFilter">
+            <option value="date-desc">Date ↓ (Newest)</option>
+            <option value="date-asc">Date ↑ (Oldest)</option>
+            <option value="name-asc">Name A–Z</option>
+            <option value="created">Recently Added</option>
+          </select>
+          <button class="btn-adm btn-adm-success" id="exportCsvBtn">
+            <i class="fa-solid fa-file-csv"></i> Export CSV
+          </button>
+        </div>
+      </div>
+      <div class="adm-table-wrap adm-panel-body">
+        <table class="adm-table">
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Patient</th>
+              <th>Department</th>
+              <th>Doctor</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Status</th>
+              <th>Age/Gender</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="apptTableBody">
+            <tr><td colspan="9">
+              <div class="empty-state">
+                <i class="fa-solid fa-calendar-xmark"></i>
+                <h3>No appointments found</h3>
+                <p>No bookings yet. Try refreshing.</p>
+              </div>
+            </td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="adm-pagination">
+        <span id="pageInfo">Showing 0 of 0 records</span>
+        <div class="pag-buttons" id="paginationBtns"></div>
+      </div>
+    </div>
+  </div><!-- /page-appointments -->
+
+  <!-- ════ PAGE: CALENDAR ════ -->
+  <div class="adm-page" id="page-calendar">
+    <div class="adm-panel">
+      <div class="adm-panel-header">
+        <div class="adm-panel-title">
+          <i class="fa-solid fa-calendar-days"></i> Calendar View
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn-adm btn-adm-outline" id="admCalPrev"><i class="fa-solid fa-chevron-left"></i> Prev</button>
+          <button class="btn-adm btn-adm-outline" id="admCalNext">Next <i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 320px;">
+        <div class="cal-adm-wrapper">
+          <div class="cal-adm-header">
+            <div class="cal-adm-title" id="admCalTitle">—</div>
+          </div>
+          <div class="cal-adm-grid">
+            <div class="cal-adm-wd">Sun</div>
+            <div class="cal-adm-wd">Mon</div>
+            <div class="cal-adm-wd">Tue</div>
+            <div class="cal-adm-wd">Wed</div>
+            <div class="cal-adm-wd">Thu</div>
+            <div class="cal-adm-wd">Fri</div>
+            <div class="cal-adm-wd">Sat</div>
+          </div>
+          <div class="cal-adm-grid" id="admCalDays"></div>
+        </div>
+        <div class="cal-detail-panel">
+          <div class="cal-detail-title" id="calDetailTitle">Select a date to view appointments</div>
+          <div id="calDetailBody">
+            <div class="empty-state" style="padding:24px;">
+              <i class="fa-regular fa-calendar" style="font-size:2rem;margin-bottom:10px;opacity:.35;"></i>
+              <p>Click any highlighted date to see bookings.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /page-calendar -->
+
+  <!-- ════ PAGE: SETTINGS ════ -->
+  <div class="adm-page" id="page-settings">
+    <div class="adm-panel" style="max-width:700px;">
+      <div class="adm-panel-header">
+        <div class="adm-panel-title"><i class="fa-solid fa-lock"></i> Change Admin Password</div>
+      </div>
+      <div style="padding:24px;">
+        <div class="settings-section">
+          <div class="settings-label">New Password</div>
+          <input type="password" class="settings-input" id="newPass" placeholder="Enter new password (min. 4 chars)" />
+        </div>
+        <div class="settings-section">
+          <div class="settings-label">Confirm Password</div>
+          <input type="password" class="settings-input" id="confirmPass" placeholder="Re-enter new password" />
+        </div>
+        <button class="btn-adm btn-adm-primary" id="savePassBtn">
+          <i class="fa-solid fa-key"></i> Save New Password
+        </button>
+      </div>
+    </div>
+
+    <div class="adm-panel" style="max-width:700px;">
+      <div class="adm-panel-header">
+        <div class="adm-panel-title"><i class="fa-solid fa-circle-info"></i> Clinic Information</div>
+      </div>
+      <div style="padding:24px;">
+        <div class="settings-section">
+          <div class="settings-label">Clinic Name</div>
+          <input type="text" class="settings-input" value="Shree Neuro &amp; Dental Health Care" readonly />
+        </div>
+        <div class="settings-section">
+          <div class="settings-label">Phone</div>
+          <input type="text" class="settings-input" value="+91 93373 88068 / +91 70089 56183" readonly />
+        </div>
+        <div class="settings-section">
+          <div class="settings-label">Consultation Hours</div>
+          <input type="text" class="settings-input" value="Monday – Saturday, 6:00 PM – 9:00 PM" readonly />
+        </div>
+        <div class="settings-section">
+          <div class="settings-label">Location</div>
+          <input type="text" class="settings-input" value="Madhavban, Badabazar, Khetrajpur, Sambalpur, Odisha 768003" readonly />
+        </div>
+        <p style="font-size:0.78rem;color:var(--adm-muted);margin-top:8px;">Contact your developer to update clinic information.</p>
+      </div>
+    </div>
+
+    <div class="adm-panel" style="max-width:700px;">
+      <div class="adm-panel-header">
+        <div class="adm-panel-title" style="color:var(--clr-red)"><i class="fa-solid fa-triangle-exclamation"></i> Danger Zone</div>
+      </div>
+      <div style="padding:24px;">
+        <p style="font-size:0.88rem;color:var(--adm-muted);margin-bottom:16px;">
+          Clearing all data will permanently delete every appointment record. This action cannot be undone.
+        </p>
+        <button class="btn-adm" id="clearDataBtn" style="background:rgba(224,82,82,0.1);color:var(--clr-red);border:1.5px solid rgba(224,82,82,0.3);">
+          <i class="fa-solid fa-trash-can"></i> Clear All Appointment Data
+        </button>
+      </div>
+    </div>
+  </div><!-- /page-settings -->
+
+  <!-- ════ PAGE: AI CONVERSATIONS ════ -->
+  <div class="adm-page" id="page-ai-chats">
+    <div class="adm-panel">
+      <div class="adm-panel-header">
+        <div class="adm-panel-title">
+          <i class="fa-solid fa-robot"></i> AI Conversation Logs
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <div class="search-input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" class="adm-search" id="aiChatSearch" placeholder="Search by patient, intent..." oninput="filterAIChats()" />
+          </div>
+          <select class="adm-filter-select" id="intentFilter" onchange="filterAIChats()">
+            <option value="">All Intents</option>
+            <option value="book">Booking</option>
+            <option value="cancel">Cancellation</option>
+            <option value="reschedule">Reschedule</option>
+            <option value="faq">FAQ</option>
+            <option value="emergency">Emergency</option>
+            <option value="greeting">Greeting</option>
+          </select>
+          <button class="btn-adm btn-adm-success" onclick="exportAIChatsCSV()">
+            <i class="fa-solid fa-file-csv"></i> Export
+          </button>
+        </div>
+      </div>
+      <div class="adm-table-wrap adm-panel-body">
+        <table class="adm-table">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Session ID</th>
+              <th>Patient</th>
+              <th>Intent</th>
+              <th>User Message</th>
+              <th>Bot Reply</th>
+              <th>Department</th>
+            </tr>
+          </thead>
+          <tbody id="aiChatTableBody">
+            <tr><td colspan="7">
+              <div class="empty-state">
+                <i class="fa-solid fa-robot"></i>
+                <h3>No AI conversations yet</h3>
+                <p>Chatbot conversations will appear here once Firebase is configured and patients start chatting.</p>
+              </div>
+            </td></tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- AI Stats Row -->
+      <div style="padding:16px 20px;border-top:1px solid var(--adm-border);display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;">
+        <div style="text-align:center;">
+          <div style="font-size:1.4rem;font-weight:800;font-family:var(--font-heading);color:var(--clr-primary);" id="aiTotal">0</div>
+          <div style="font-size:0.72rem;color:var(--adm-muted);">Total Chats</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:1.4rem;font-weight:800;font-family:var(--font-heading);color:var(--clr-green);" id="aiBookings">0</div>
+          <div style="font-size:0.72rem;color:var(--adm-muted);">Bookings via AI</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:1.4rem;font-weight:800;font-family:var(--font-heading);color:var(--clr-orange,#F97316);" id="aiEmergencies">0</div>
+          <div style="font-size:0.72rem;color:var(--adm-muted);">Emergencies Flagged</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:1.4rem;font-weight:800;font-family:var(--font-heading);color:var(--clr-accent);" id="aiSessions">0</div>
+          <div style="font-size:0.72rem;color:var(--adm-muted);">Unique Sessions</div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /page-ai-chats -->
+
+  <!-- ════ PAGE: ANALYTICS ════ -->
+  <div class="adm-page" id="page-analytics">
+    <div class="stats-grid" style="margin-bottom:24px;">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
+        <div class="stat-content">
+          <div class="stat-value" id="an-total">0</div>
+          <div class="stat-label">Total Bookings</div>
+          <div class="stat-trend"><i class="fa-solid fa-chart-line"></i> All time</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-robot"></i></div>
+        <div class="stat-content">
+          <div class="stat-value" id="an-ai">0</div>
+          <div class="stat-label">AI Bookings</div>
+          <div class="stat-trend" style="color:var(--clr-accent)"><i class="fa-solid fa-sparkles"></i> via chatbot</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-brain"></i></div>
+        <div class="stat-content">
+          <div class="stat-value" id="an-neuro">0</div>
+          <div class="stat-label">Neurology</div>
+          <div class="stat-trend"><i class="fa-solid fa-stethoscope"></i> consultations</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-tooth"></i></div>
+        <div class="stat-content">
+          <div class="stat-value" id="an-dental">0</div>
+          <div class="stat-label">Dental</div>
+          <div class="stat-trend"><i class="fa-solid fa-tooth"></i> appointments</div>
+        </div>
+      </div>
+    </div>
+    <div class="mini-charts">
+      <div class="chart-card" style="grid-column:span 2;">
+        <div class="chart-card-title"><i class="fa-solid fa-chart-bar"></i> Monthly Appointments — Last 6 Months</div>
+        <div class="bar-chart" id="monthlyChart" style="height:160px;"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card-title"><i class="fa-solid fa-clock"></i> Peak Booking Hours</div>
+        <div class="bar-chart" id="hourlyChart"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card-title"><i class="fa-solid fa-chart-pie"></i> Booking Source</div>
+        <div class="donut-wrap">
+          <svg id="sourceDonut" class="donut-chart" viewBox="0 0 110 110"></svg>
+          <div class="donut-legend">
+            <div class="legend-item">
+              <div class="legend-dot" style="background:var(--clr-accent)"></div>
+              <span class="legend-label">AI Chatbot</span>
+              <span class="legend-val" id="src-ai">0</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:var(--clr-primary)"></div>
+              <span class="legend-label">Web Form</span>
+              <span class="legend-val" id="src-form">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /page-analytics -->
+
+</main>
+
+<!-- ════ APPOINTMENT DETAIL MODAL ════ -->
+<div class="adm-modal-overlay" id="apptModal">
+  <div class="adm-modal">
+    <div class="modal-header">
+      <h3><i class="fa-solid fa-calendar-check" style="margin-right:8px"></i>Appointment Details</h3>
+      <button class="modal-close" id="modalClose"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div style="background:var(--adm-bg);border-radius:var(--radius-md);padding:12px 16px;margin-bottom:16px;font-family:'Courier New',monospace;font-size:0.82rem;color:var(--clr-primary);font-weight:700;display:flex;align-items:center;gap:8px;">
+        <i class="fa-solid fa-hashtag" style="opacity:.6"></i>
+        <span id="mId">—</span>
+      </div>
+      <div class="modal-detail-grid">
+        <div class="modal-detail-item">
+          <div class="md-label">Patient Name</div>
+          <div class="md-val" id="mName">—</div>
+        </div>
+        <div class="modal-detail-item">
+          <div class="md-label">Phone</div>
+          <div class="md-val" id="mPhone">—</div>
+        </div>
+        <div class="modal-detail-item">
+          <div class="md-label">Email</div>
+          <div class="md-val" id="mEmail">—</div>
+        </div>
+        <div class="modal-detail-item">
+          <div class="md-label">Age / Gender</div>
+          <div class="md-val"><span id="mAge">—</span> / <span id="mGender">—</span></div>
+        </div>
+        <div class="modal-detail-item">
+          <div class="md-label">Department</div>
+          <div class="md-val" id="mDept">—</div>
+        </div>
+        <div class="modal-detail-item">
+          <div class="md-label">Doctor</div>
+          <div class="md-val" id="mDoctor">—</div>
+        </div>
+        <div class="modal-detail-item">
+          <div class="md-label">Appointment Date</div>
+          <div class="md-val" id="mDate">—</div>
+        </div>
+        <div class="modal-detail-item">
+          <div class="md-label">Time Slot</div>
+          <div class="md-val" id="mSlot">—</div>
+        </div>
+        <div class="modal-detail-item">
+          <div class="md-label">Current Status</div>
+          <div id="mStatus">—</div>
+        </div>
+        <div class="modal-detail-item">
+          <div class="md-label">Booked On</div>
+          <div class="md-val" id="mCreated">—</div>
+        </div>
+      </div>
+      <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--adm-muted);font-weight:600;margin-bottom:6px;font-family:var(--font-heading)">Chief Complaint / Symptoms</div>
+      <div class="modal-symptoms" id="mSymptoms">—</div>
+      <div class="modal-actions">
+        <button class="btn-adm btn-adm-outline" id="mConfirmBtn"><i class="fa-solid fa-circle-check"></i> Confirm</button>
+        <button class="btn-adm btn-adm-success" id="mCompleteBtn"><i class="fa-solid fa-flag-checkered"></i> Complete</button>
+        <button class="btn-adm" id="mCancelBtn" style="background:rgba(249,115,22,.1);color:#C2410C;"><i class="fa-solid fa-ban"></i> Cancel</button>
+        <button class="btn-adm" id="mDeleteBtn" style="background:rgba(224,82,82,.1);color:var(--clr-red);"><i class="fa-solid fa-trash"></i> Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="../js/config.js"></script>
+<!-- Firebase Compat SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
