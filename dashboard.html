@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Dashboard — Shree Neuro &amp; Dental Health Care</title>
+  <meta name="robots" content="noindex" />
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/chatbot.css" />
+</head>
+<body>
+
+  <!-- ─── Sidebar Overlay (mobile) ─── -->
+  <div class="dash-overlay" id="dashOverlay" onclick="closeMobileSidebar()"></div>
+
+  <!-- ══════════════════════════════════════
+       SIDEBAR
+  ══════════════════════════════════════ -->
+  <aside class="dash-sidebar" id="dashSidebar">
+
+    <!-- Brand -->
+    <div class="dash-sidebar-brand">
+      <div class="dash-brand-icon"><i class="fa-solid fa-hospital"></i></div>
+      <div class="dash-brand-text">
+        <h3>Shree Clinic</h3>
+        <p>Patient Portal</p>
+      </div>
+    </div>
+
+    <!-- User Card -->
+    <div class="dash-user-card" id="sidebarUserCard">
+      <div class="dash-user-avatar" id="userAvatarInitial">?</div>
+      <div class="dash-user-info">
+        <div class="dash-user-name" id="sidebarUserName">Loading...</div>
+        <div class="dash-user-role">Patient</div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="dash-nav">
+      <div class="dash-nav-section">Navigation</div>
+
+      <button class="dash-nav-item active" data-page="overview" onclick="showPage('overview', this)">
+        <div class="dash-nav-icon"><i class="fa-solid fa-gauge-high"></i></div>
+        Overview
+      </button>
+
+      <button class="dash-nav-item" data-page="appointments" onclick="showPage('appointments', this)">
+        <div class="dash-nav-icon"><i class="fa-solid fa-calendar-check"></i></div>
+        My Appointments
+      </button>
+
+      <button class="dash-nav-item" data-page="chat-history" onclick="showPage('chat-history', this)">
+        <div class="dash-nav-icon"><i class="fa-solid fa-comments"></i></div>
+        AI Chat History
+      </button>
+
+      <div class="dash-nav-section">Account</div>
+
+      <button class="dash-nav-item" data-page="profile" onclick="showPage('profile', this)">
+        <div class="dash-nav-icon"><i class="fa-solid fa-user-circle"></i></div>
+        My Profile
+      </button>
+
+      <div class="dash-nav-section">Quick Links</div>
+
+      <a href="appointment.html" class="dash-nav-item">
+        <div class="dash-nav-icon"><i class="fa-solid fa-calendar-plus"></i></div>
+        Book Appointment
+      </a>
+
+      <a href="index.html" class="dash-nav-item">
+        <div class="dash-nav-icon"><i class="fa-solid fa-house"></i></div>
+        Back to Website
+      </a>
+    </nav>
+
+    <!-- Sidebar Footer -->
+    <div class="dash-sidebar-footer">
+      <button class="dash-nav-item" onclick="handleLogout()">
+        <div class="dash-nav-icon"><i class="fa-solid fa-right-from-bracket"></i></div>
+        Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- ══════════════════════════════════════
+       MAIN CONTENT
+  ══════════════════════════════════════ -->
+  <main class="dash-main">
+
+    <!-- Top Bar -->
+    <div class="dash-topbar">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="dash-topbar-btn" id="mobileMenuBtn" onclick="openMobileSidebar()" style="display:none;" aria-label="Open menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="dash-topbar-title" id="topbarTitle">Overview</div>
+      </div>
+      <div class="dash-topbar-right">
+        <button class="dash-topbar-btn" id="themeBtn" onclick="toggleDashTheme()" title="Toggle dark mode" aria-label="Toggle theme">
+          <i class="fa-solid fa-moon" id="themeIcon"></i>
+        </button>
+        <button class="dash-topbar-btn" onclick="window.location.href='appointment.html'" title="Book new appointment" aria-label="Book appointment">
+          <i class="fa-solid fa-calendar-plus"></i>
+        </button>
+        <button class="dash-topbar-btn" onclick="loadData()" title="Refresh data" aria-label="Refresh">
+          <i class="fa-solid fa-rotate-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="dash-content">
+
+      <!-- ════ PAGE: OVERVIEW ════ -->
+      <div class="dash-page active" id="page-overview">
+
+        <!-- AI CTA Banner -->
+        <div class="ai-cta-banner">
+          <div style="flex:1;">
+            <h3>Chat with Shreya — Your AI Health Assistant</h3>
+            <p>Book, reschedule, or get instant answers via our intelligent chatbot</p>
+          </div>
+          <button class="dash-btn" onclick="if(window.ShreeChatWidgetInstance) ShreeChatWidgetInstance.open()">
+            <i class="fa-solid fa-comments"></i> Open Chat
+          </button>
+        </div>
+
+        <!-- Stats -->
+        <div class="dash-stats" id="overviewStats">
+          <div class="dash-stat-card">
+            <div class="dash-stat-icon blue"><i class="fa-solid fa-calendar-check"></i></div>
+            <div>
+              <div class="dash-stat-value" id="statTotal">0</div>
+              <div class="dash-stat-label">Total Appointments</div>
+            </div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="dash-stat-icon green"><i class="fa-solid fa-calendar-day"></i></div>
+            <div>
+              <div class="dash-stat-value" id="statUpcoming">0</div>
+              <div class="dash-stat-label">Upcoming</div>
+            </div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="dash-stat-icon teal"><i class="fa-solid fa-circle-check"></i></div>
+            <div>
+              <div class="dash-stat-value" id="statCompleted">0</div>
+              <div class="dash-stat-label">Completed</div>
+            </div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="dash-stat-icon orange"><i class="fa-solid fa-hourglass-half"></i></div>
+            <div>
+              <div class="dash-stat-value" id="statPending">0</div>
+              <div class="dash-stat-label">Pending</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upcoming Appointments Panel -->
+        <div class="dash-panel">
+          <div class="dash-panel-header">
+            <div class="dash-panel-title">
+              <i class="fa-solid fa-clock"></i> Upcoming Appointments
+            </div>
+            <button class="dash-btn outline" onclick="showPage('appointments', document.querySelector('[data-page=appointments]'))">
+              View All <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+          <div class="dash-panel-body">
+            <div class="appt-list" id="upcomingList">
+              <div class="dash-empty">
+                <div class="dash-empty-icon"><i class="fa-regular fa-calendar"></i></div>
+                <h3>No upcoming appointments</h3>
+                <p>Book your first appointment using the AI chatbot or booking form</p>
+                <a href="appointment.html" class="dash-btn primary" style="margin-top:14px;display:inline-flex;">
+                  <i class="fa-solid fa-calendar-plus"></i> Book Now
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════ PAGE: MY APPOINTMENTS ════ -->
+      <div class="dash-page" id="page-appointments">
+        <div class="dash-page-header">
+          <div>
+            <h2>My Appointments</h2>
+            <p>View and manage all your appointments</p>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <select id="apptFilter" style="padding:8px 12px;border-radius:8px;border:1.5px solid var(--clr-border);background:var(--clr-surface);color:var(--clr-text);font-family:var(--font-body);font-size:0.85rem;cursor:pointer;" onchange="filterAppointments()">
+              <option value="">All Statuses</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="pending">Pending</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+            <a href="appointment.html" class="dash-btn primary">
+              <i class="fa-solid fa-plus"></i> New Appointment
+            </a>
+          </div>
+        </div>
+
+        <div class="dash-panel">
+          <div class="dash-panel-body">
+            <div class="appt-list" id="allApptList">
+              <div class="dash-empty">
+                <div class="dash-empty-icon"><i class="fa-solid fa-calendar-xmark"></i></div>
+                <h3>No appointments found</h3>
+                <p>Your appointment history will appear here</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════ PAGE: CHAT HISTORY ════ -->
+      <div class="dash-page" id="page-chat-history">
+        <div class="dash-page-header">
+          <div>
+            <h2>AI Chat History</h2>
+            <p>Your recent conversations with Shreya</p>
+          </div>
+          <button class="dash-btn primary" onclick="if(window.ShreeChatWidgetInstance) ShreeChatWidgetInstance.open()">
+            <i class="fa-solid fa-comments"></i> New Chat
+          </button>
+        </div>
+
+        <div class="dash-panel">
+          <div class="dash-panel-body">
+            <div class="chat-history-list" id="chatHistoryList">
+              <div class="dash-empty">
+                <div class="dash-empty-icon"><i class="fa-solid fa-robot"></i></div>
+                <h3>No chat history yet</h3>
+                <p>Start a conversation with Shreya AI to see your history here</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════ PAGE: PROFILE ════ -->
+      <div class="dash-page" id="page-profile">
+        <div class="dash-page-header">
+          <div>
+            <h2>My Profile</h2>
+            <p>Update your personal information</p>
+          </div>
+        </div>
+
+        <div class="dash-panel">
+          <div class="dash-panel-header">
+            <div class="dash-panel-title">
+              <i class="fa-solid fa-user-circle"></i> Personal Information
+            </div>
+          </div>
+          <div class="dash-panel-body">
+            <div style="text-align:center;margin-bottom:24px;">
+              <div style="width:80px;height:80px;border-radius:50%;background:var(--grad-accent);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:2rem;color:white;font-weight:700;font-family:var(--font-heading);" id="profileAvatar">?</div>
+              <div style="font-family:var(--font-heading);font-weight:600;font-size:1.1rem;" id="profileName">—</div>
+              <div style="font-size:0.8rem;color:var(--clr-text-muted);" id="profileEmail">—</div>
+            </div>
+
+            <div class="profile-grid">
+              <div class="profile-field">
+                <label class="profile-label" for="pName">Full Name</label>
+                <input type="text" id="pName" class="profile-input" placeholder="Your full name" />
+              </div>
+              <div class="profile-field">
+                <label class="profile-label" for="pPhone">Phone Number</label>
+                <input type="tel" id="pPhone" class="profile-input" placeholder="+91 98765 43210" />
+              </div>
+              <div class="profile-field full">
+                <label class="profile-label" for="pEmail">Email Address</label>
+                <input type="email" id="pEmail" class="profile-input" placeholder="you@example.com" readonly style="opacity:0.7;cursor:not-allowed;" />
+              </div>
+            </div>
+
+            <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;">
+              <button class="dash-btn primary" onclick="saveProfile()">
+                <i class="fa-solid fa-floppy-disk"></i> Save Changes
+              </button>
+              <button class="dash-btn outline" onclick="handleLogout()">
+                <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Account Info -->
+        <div class="dash-panel">
+          <div class="dash-panel-header">
+            <div class="dash-panel-title"><i class="fa-solid fa-shield-halved"></i> Account Security</div>
+          </div>
+          <div class="dash-panel-body">
+            <p style="font-size:0.85rem;color:var(--clr-text-muted);margin-bottom:16px;">
+              Your account is protected. Contact the clinic for any account issues.
+            </p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <a href="https://wa.me/917008956183?text=Hello%2C%20I%20need%20help%20with%20my%20patient%20account" target="_blank" class="dash-btn outline">
+                <i class="fa-brands fa-whatsapp"></i> Contact Support via WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /dash-content -->
+  </main>
+
+  <!-- ─── Config & Scripts ─── -->
+  <script src="js/config.js"></script>
+
+  <!-- Firebase SDKs (optional) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+  <!-- AI Modules -->
+  <script src="js/knowledge-base.js"></script>
+  <script src="js/ai-auth.js"></script>
+  <script src="js/ai-notifications.js"></script>
+  <script src="js/ai-chatbot.js"></script>
+  <script src="js/chat-widget.js"></script>
+
+  <script>
+    let allAppointments = [];
+    let currentUser = null;
+
+    // ─── Initialize ───────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check auth
+      window.ShreeAuthInstance.onAuthStateChange((user) => {
+        if (!user) {
+          window.location.href = 'auth.html?return=dashboard.html';
+          return;
+        }
+        currentUser = user;
+        renderUserInfo(user);
+        loadData();
+      });
+
+      // Mobile menu button
+      if (window.innerWidth <= 900) {
+        document.getElementById('mobileMenuBtn').style.display = 'flex';
+      }
+
+      window.addEventListener('resize', () => {
+        document.getElementById('mobileMenuBtn').style.display = window.innerWidth <= 900 ? 'flex' : 'none';
+      });
+
+      // Apply saved theme
+      const theme = localStorage.getItem('shree_theme') || 'light';
+      applyTheme(theme);
+    });
+
+    // ─── Render User Info ─────────────────────────────────────────
+    function renderUserInfo(user) {
+      const name = user.name || user.email?.split('@')[0] || 'Patient';
+      const initial = name.charAt(0).toUpperCase();
+
+      document.getElementById('userAvatarInitial').textContent = initial;
+      document.getElementById('sidebarUserName').textContent = name;
+      document.getElementById('profileAvatar').textContent = initial;
+      document.getElementById('profileName').textContent = name;
+      document.getElementById('profileEmail').textContent = user.email || user.phone || '—';
+
+      // Fill profile form
+      document.getElementById('pName').value  = name;
+      document.getElementById('pPhone').value = user.phone || '';
+      document.getElementById('pEmail').value = user.email || '';
+    }
+
+    // ─── Load Data ────────────────────────────────────────────────
+    async function loadData() {
+      const appointments = await window.ShreeAuthInstance.getUserAppointments();
+
+      // Also load from localStorage (chatbot bookings without login)
+      const localAppts = JSON.parse(localStorage.getItem('sndc_appointments') || localStorage.getItem('shree_appointments') || '[]');
+      const merged = [...appointments];
+
+      // Add local ones not already in Firebase results
+      localAppts.forEach(la => {
+        if (!merged.find(a => a.ref === la.ref)) merged.push(la);
+      });
+
+      allAppointments = merged.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+      renderStats();
+      renderUpcoming();
+      renderAllAppointments();
+      loadChatHistory();
+    }
+
+    // ─── Stats ────────────────────────────────────────────────────
+    function renderStats() {
+      const total    = allAppointments.length;
+      const today    = new Date().toISOString().split('T')[0];
+      const upcoming = allAppointments.filter(a => a.date >= today && a.status !== 'cancelled').length;
+      const completed= allAppointments.filter(a => a.status === 'completed').length;
+      const pending  = allAppointments.filter(a => a.status === 'pending' || !a.status).length;
+
+      animateNumber('statTotal',     total);
+      animateNumber('statUpcoming',  upcoming);
+      animateNumber('statCompleted', completed);
+      animateNumber('statPending',   pending);
+    }
+
+    function animateNumber(id, target) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      let start = 0;
+      const step = () => {
+        start = Math.min(start + Math.ceil(target / 12), target);
+        el.textContent = start;
+        if (start < target) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
+    // ─── Upcoming ─────────────────────────────────────────────────
+    function renderUpcoming() {
+      const today    = new Date().toISOString().split('T')[0];
+      const upcoming = allAppointments
+        .filter(a => a.date >= today && a.status !== 'cancelled')
+        .slice(0, 5);
+
+      const container = document.getElementById('upcomingList');
+      if (!upcoming.length) {
+        container.innerHTML = `<div class="dash-empty">
+          <div class="dash-empty-icon"><i class="fa-regular fa-calendar"></i></div>
+          <h3>No upcoming appointments</h3>
+          <p>Book one via the AI chatbot or booking form</p>
+          <a href="appointment.html" class="dash-btn primary" style="margin-top:14px;display:inline-flex;">
+            <i class="fa-solid fa-calendar-plus"></i> Book Now
+          </a>
+        </div>`;
+        return;
+      }
+
+      container.innerHTML = upcoming.map(a => renderApptCard(a)).join('');
+    }
+
+    // ─── All Appointments ─────────────────────────────────────────
+    function renderAllAppointments(filtered) {
+      const appts = filtered || allAppointments;
+      const container = document.getElementById('allApptList');
+
+      if (!appts.length) {
+        container.innerHTML = `<div class="dash-empty">
+          <div class="dash-empty-icon"><i class="fa-solid fa-calendar-xmark"></i></div>
+          <h3>No appointments found</h3>
+          <p>Your appointment history will appear here</p>
+        </div>`;
+        return;
+      }
+
+      container.innerHTML = appts.map(a => renderApptCard(a)).join('');
+    }
+
+    function filterAppointments() {
+      const status = document.getElementById('apptFilter').value;
+      const filtered = status ? allAppointments.filter(a => (a.status || 'pending') === status) : allAppointments;
+      renderAllAppointments(filtered);
+    }
+
+    // ─── Appointment Card HTML ─────────────────────────────────────
+    function renderApptCard(a) {
+      const status  = (a.status || 'pending').toLowerCase();
+      const dept    = a.department || 'neuro';
+      const deptIcon = dept === 'dental' ? '🦷' : '🧠';
+      const doctor   = a.doctor || (dept === 'neuro' ? 'Dr. Mahesh Kumar Kusta' : 'Dental Specialist');
+      const dateLabel = a.dateLabel || a.date || '—';
+      const slot      = a.slot || '—';
+      const waLink    = `https://wa.me/917008956183?text=Ref:+${a.ref}`;
+
+      const cancelable = ['confirmed','pending'].includes(status);
+
+      return `
+        <div class="appt-card ${status}" style="animation-delay:${Math.random()*0.2}s">
+          <div class="appt-dept-icon ${dept}">${deptIcon}</div>
+          <div class="appt-info">
+            <div class="appt-doctor">${doctor}</div>
+            <div class="appt-meta">
+              <span class="appt-meta-item"><i class="fa-solid fa-calendar"></i> ${dateLabel}</span>
+              <span class="appt-meta-item"><i class="fa-solid fa-clock"></i> ${slot}</span>
+              <span class="appt-meta-item"><i class="fa-solid fa-user"></i> ${a.patientName || '—'}</span>
+            </div>
+            <div class="appt-ref">Ref: ${a.ref || '—'}</div>
+          </div>
+          <span class="appt-status-badge ${status}">${status}</span>
+          <div class="appt-actions">
+            <button class="appt-action-btn" onclick="window.open('${waLink}','_blank')" title="WhatsApp clinic">
+              <i class="fa-brands fa-whatsapp"></i>
+            </button>
+            ${cancelable ? `<button class="appt-action-btn danger" onclick="cancelAppt('${a.ref}')" title="Cancel appointment">
+              <i class="fa-solid fa-ban"></i>
+            </button>` : ''}
+          </div>
+        </div>`;
+    }
+
+    // ─── Cancel Appointment ───────────────────────────────────────
+    async function cancelAppt(ref) {
+      if (!confirm('Cancel this appointment? This cannot be undone.')) return;
+      const result = await window.ShreeAuthInstance.cancelAppointment(ref);
+      if (result.success) {
+        showDashToast('Appointment cancelled successfully', 'success');
+        await loadData();
+      } else {
+        showDashToast('Could not cancel. Please call us.', 'error');
+      }
+    }
+
+    // ─── Chat History ─────────────────────────────────────────────
+    function loadChatHistory() {
+      const container = document.getElementById('chatHistoryList');
+
+      // Try Firebase
+      if (typeof db !== 'undefined' && db) {
+        db.collection('ai_chats')
+          .orderBy('timestamp', 'desc')
+          .limit(20)
+          .get()
+          .then(snap => {
+            if (snap.empty) { showEmptyChatHistory(); return; }
+            const items = snap.docs.map(doc => doc.data());
+            renderChatHistory(items);
+          })
+          .catch(() => showEmptyChatHistory());
+        return;
+      }
+
+      showEmptyChatHistory();
+    }
+
+    function renderChatHistory(items) {
+      const container = document.getElementById('chatHistoryList');
+      if (!items.length) { showEmptyChatHistory(); return; }
+
+      const intentIcons = {
+        book: '📅', cancel: '❌', reschedule: '🔄',
+        availability: '🕐', faq: '❓', greeting: '👋',
+        emergency: '⚠️', general: '💬', confirm_booking: '✅'
+      };
+
+      container.innerHTML = items.map(item => `
+        <div class="chat-history-item">
+          <div class="chat-history-icon">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <div class="chat-history-info">
+            <div class="chat-history-intent">
+              ${intentIcons[item.intent] || '💬'} ${(item.intent || 'general').replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase())}
+              ${item.patientName ? `— ${item.patientName}` : ''}
+            </div>
+            <div class="chat-history-preview">${item.userMessage || '—'}</div>
+          </div>
+          <div class="chat-history-time">${formatDate(item.timestamp)}</div>
+        </div>`).join('');
+    }
+
+    function showEmptyChatHistory() {
+      document.getElementById('chatHistoryList').innerHTML = `
+        <div class="dash-empty">
+          <div class="dash-empty-icon"><i class="fa-solid fa-robot"></i></div>
+          <h3>No chat history yet</h3>
+          <p>Conversations with Shreya AI will appear here after Firebase is configured</p>
+          <button class="dash-btn primary" style="margin-top:14px" onclick="if(window.ShreeChatWidgetInstance) ShreeChatWidgetInstance.open()">
+            <i class="fa-solid fa-comments"></i> Start a Conversation
+          </button>
+        </div>`;
+    }
+
+    // ─── Save Profile ─────────────────────────────────────────────
+    async function saveProfile() {
+      const name  = document.getElementById('pName').value.trim();
+      const phone = document.getElementById('pPhone').value.trim();
+
+      if (!name) { showDashToast('Please enter your name', 'error'); return; }
+
+      const result = await window.ShreeAuthInstance.updateProfile({ name, phone });
+      if (result.success) {
+        renderUserInfo({ ...currentUser, name, phone });
+        showDashToast('Profile updated successfully!', 'success');
+      } else {
+        showDashToast('Could not update profile', 'error');
+      }
+    }
+
+    // ─── Logout ───────────────────────────────────────────────────
+    async function handleLogout() {
+      await window.ShreeAuthInstance.logout();
+      window.location.href = 'index.html';
+    }
+
+    // ─── Page Navigation ──────────────────────────────────────────
+    function showPage(pageName, btn) {
+      document.querySelectorAll('.dash-page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.dash-nav-item').forEach(n => n.classList.remove('active'));
+
+      document.getElementById(`page-${pageName}`)?.classList.add('active');
+      btn?.classList.add('active');
+
+      const titles = {
+        overview: 'Overview', appointments: 'My Appointments',
+        'chat-history': 'AI Chat History', profile: 'My Profile'
+      };
+      document.getElementById('topbarTitle').textContent = titles[pageName] || pageName;
+
+      if (window.innerWidth <= 900) closeMobileSidebar();
+    }
+
+    // ─── Theme ────────────────────────────────────────────────────
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      const icon = document.getElementById('themeIcon');
+      if (icon) {
+        icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+      }
+    }
+
+    function toggleDashTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('shree_theme', next);
+      applyTheme(next);
+    }
+
+    // ─── Mobile Sidebar ───────────────────────────────────────────
+    function openMobileSidebar() {
+      document.getElementById('dashSidebar').classList.add('mobile-open');
+      document.getElementById('dashOverlay').classList.add('active');
+    }
+
+    function closeMobileSidebar() {
+      document.getElementById('dashSidebar').classList.remove('mobile-open');
+      document.getElementById('dashOverlay').classList.remove('active');
+    }
+
+    // ─── Toast ────────────────────────────────────────────────────
+    function showDashToast(msg, type = 'info') {
+      if (window.ShreeChatWidgetInstance) {
+        window.ShreeChatWidgetInstance.showToast(msg, type);
+      } else {
+        alert(msg);
+      }
+    }
+
+    // ─── Date Formatter ───────────────────────────────────────────
+    function formatDate(ts) {
+      if (!ts) return '—';
+      const d = new Date(ts);
+      return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Appointment Status — Shree Neuro &amp; Dental Health Care</title>
+  <meta name="description" content="Check your appointment status at Shree Neuro & Dental Health Care, Sambalpur. Enter your booking reference or phone number." />
+  <meta name="robots" content="noindex" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* ── DESIGN TOKENS ── */
+    :root {
+      --bg:          #f0f4ff;
+      --surface:     #ffffff;
+      --surface2:    #f8faff;
+      --border:      #e2e8f4;
+      --text:        #1a202c;
+      --text-muted:  #64748b;
+      --primary:     #4f46e5;
+      --primary-h:   #4338ca;
+      --grad:        linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      --grad-card:   linear-gradient(145deg, #ffffff 0%, #f8faff 100%);
+      --shadow-sm:   0 2px 8px rgba(79,70,229,.08);
+      --shadow-md:   0 8px 32px rgba(79,70,229,.12);
+      --shadow-lg:   0 20px 60px rgba(79,70,229,.18);
+      --radius:      16px;
+      --radius-sm:   10px;
+      --font:        'Outfit', system-ui, sans-serif;
+      --font-body:   'Inter', system-ui, sans-serif;
+      --transition:  all .25s cubic-bezier(.4,0,.2,1);
+    }
+    [data-theme="dark"] {
+      --bg:         #0f1117;
+      --surface:    #1a1d2e;
+      --surface2:   #232640;
+      --border:     #2d3154;
+      --text:       #e2e8f0;
+      --text-muted: #8892b0;
+      --shadow-sm:  0 2px 8px rgba(0,0,0,.3);
+      --shadow-md:  0 8px 32px rgba(0,0,0,.4);
+      --shadow-lg:  0 20px 60px rgba(0,0,0,.5);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ── ANIMATED BG ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 800px 600px at 10% 20%, rgba(79,70,229,.08) 0%, transparent 70%),
+        radial-gradient(ellipse 600px 500px at 90% 80%, rgba(124,58,237,.07) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .topbar-brand img { height: 36px; border-radius: 8px; }
+    .topbar-brand-text h3 {
+      font-size: .95rem;
+      font-weight: 700;
+      line-height: 1.2;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .topbar-brand-text p { font-size: .72rem; color: var(--text-muted); }
+    .topbar-actions { display: flex; gap: 10px; align-items: center; }
+    .topbar-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: .82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+    .topbar-btn:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-1px); }
+    .topbar-btn.primary {
+      background: var(--grad);
+      border-color: transparent;
+      color: #fff;
+    }
+    .topbar-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(79,70,229,.35); color: #fff; }
+
+    /* ── MAIN LAYOUT ── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 20px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── HERO HEADER ── */
+    .hero {
+      text-align: center;
+      max-width: 560px;
+      margin-bottom: 40px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(79,70,229,.1);
+      color: var(--primary);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      margin-bottom: 16px;
+      border: 1px solid rgba(79,70,229,.15);
+    }
+    .hero h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .hero h1 span {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-family: var(--font-body);
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    /* ── SEARCH CARD ── */
+    .search-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      padding: 32px;
+      width: 100%;
+      max-width: 560px;
+      margin-bottom: 32px;
+    }
+    .search-card h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .search-card h2 i { color: var(--primary); }
+    .search-card p {
+      font-family: var(--font-body);
+      font-size: .85rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    /* ── TABS ── */
+    .search-tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--surface2);
+      padding: 4px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 20px;
+    }
+    .search-tab {
+      flex: 1;
+      padding: 9px 14px;
+      border-radius: 7px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: var(--font);
+      font-size: .85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .search-tab.active {
+      background: var(--surface);
+      color: var(--primary);
+      font-weight: 600;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ── INPUT ── */
+    .input-wrap {
+      position: relative;
+      margin-bottom: 16px;
+    }
+    .input-wrap i.icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: .9rem;
+      pointer-events: none;
+    }
+    .input-wrap input {
+      width: 100%;
+      padding: 13px 14px 13px 40px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 1rem;
+      transition: var(--transition);
+      outline: none;
+    }
+    .input-wrap input:focus {
+      border-color: var(--primary);
+      background: var(--surface);
+      box-shadow: 0 0 0 3px rgba(79,70,229,.12);
+    }
+    .input-wrap input::placeholder { color: var(--text-muted); opacity: .7; }
+
+    .search-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: var(--grad);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .search-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,.12);
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    .search-btn:hover::after { opacity: 1; }
+    .search-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(79,70,229,.35); }
+    .search-btn:active { transform: translateY(0); }
+    .search-btn:disabled { opacity: .7; cursor: not-allowed; transform: none; }
+
+    /* ── SPINNER ── */
+    .spin {
+      width: 18px; height: 18px;
+      border: 2.5px solid rgba(255,255,255,.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      display: none;
+    }
+    .search-btn.loading .spin { display: block; }
+    .search-btn.loading .btn-text { display: none; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── RESULT SECTION ── */
+    #resultSection { width: 100%; max-width: 560px; }
+
+    /* ── RESULT CARD ── */
+    .result-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      animation: slideUp .4s cubic-bezier(.4,0,.2,1);
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── STATUS HEADER BANDS ── */
+    .result-header {
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .result-header.confirmed  { background: linear-gradient(135deg, #065f46, #047857); }
+    .result-header.pending    { background: linear-gradient(135deg, #78350f, #b45309); }
+    .result-header.cancelled  { background: linear-gradient(135deg, #7f1d1d, #b91c1c); }
+    .result-header.completed  { background: linear-gradient(135deg, #1e3a5f, #1d4ed8); }
+
+    .result-status-icon {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .result-header-text { flex: 1; }
+    .result-status-label {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      color: rgba(255,255,255,.75);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .result-status-value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+    }
+    .result-status-sub {
+      font-family: var(--font-body);
+      font-size: .82rem;
+      color: rgba(255,255,255,.75);
+      margin-top: 4px;
+    }
+
+    /* ── RESULT BODY ── */
+    .result-body { padding: 24px 28px; }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .result-field {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+    }
+    .result-field.full { grid-column: 1 / -1; }
+    .result-field-label {
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .result-field-value {
+      font-family: var(--font-body);
+      font-size: .9rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ── STATUS NOTICE BOX ── */
+    .notice-box {
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      font-family: var(--font-body);
+      font-size: .85rem;
+      line-height: 1.5;
+    }
+    .notice-box.confirmed { background: rgba(6,95,70,.08); border: 1px solid rgba(6,95,70,.2); color: #047857; }
+    .notice-box.pending   { background: rgba(180,83,9,.08); border: 1px solid rgba(180,83,9,.2); color: #b45309; }
+    .notice-box.cancelled { background: rgba(185,28,28,.08); border: 1px solid rgba(185,28,28,.2); color: #b91c1c; }
+    .notice-box.completed { background: rgba(29,78,216,.08); border: 1px solid rgba(29,78,216,.2); color: #1d4ed8; }
+    [data-theme="dark"] .notice-box.confirmed { color: #34d399; }
+    [data-theme="dark"] .notice-box.pending   { color: #fbbf24; }
+    [data-theme="dark"] .notice-box.cancelled { color: #f87171; }
+    [data-theme="dark"] .notice-box.completed { color: #60a5fa; }
+    .notice-box i { font-size: 1rem; margin-top: 1px; flex-shrink: 0; }
+
+    /* ── ACTION BUTTONS ── */
+    .result-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font);
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      text-decoration: none;
+    }
+    .action-btn:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-1px); }
+    .action-btn.wa { background: #25D366; border-color: #25D366; color: #fff; }
+    .action-btn.wa:hover { background: #20b857; border-color: #20b857; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(37,211,102,.35); color:#fff; }
+    .action-btn.primary { background: var(--grad); border-color: transparent; color: #fff; }
+    .action-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(79,70,229,.35); color:#fff; }
+
+    /* ── ERROR / EMPTY STATE ── */
+    .state-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 40px 28px;
+      text-align: center;
+      animation: slideUp .4s cubic-bezier(.4,0,.2,1);
+    }
+    .state-icon {
+      font-size: 2.5rem;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .state-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
+    .state-card p { font-family: var(--font-body); font-size: .88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
+
+    /* ── HELP CARD ── */
+    .help-strip {
+      width: 100%;
+      max-width: 560px;
+      margin-top: 28px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .help-icon {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(79,70,229,.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+    .help-strip h4 { font-size: .92rem; font-weight: 600; margin-bottom: 3px; }
+    .help-strip p { font-family: var(--font-body); font-size: .8rem; color: var(--text-muted); }
+    .help-links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .help-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-family: var(--font); font-size: .78rem; font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    .help-link.wa { background: rgba(37,211,102,.12); color: #16a34a; border: 1px solid rgba(37,211,102,.25); }
+    .help-link.wa:hover { background: #25D366; color: #fff; }
+    .help-link.phone { background: rgba(79,70,229,.1); color: var(--primary); border: 1px solid rgba(79,70,229,.2); }
+    .help-link.phone:hover { background: var(--primary); color: #fff; }
+
+    /* ── DIVIDER WITH "OR" ── */
+    .or-divider {
+      text-align: center;
+      font-size: .78rem;
+      color: var(--text-muted);
+      margin: 8px 0;
+      position: relative;
+    }
+    .or-divider::before, .or-divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 42%;
+      height: 1px;
+      background: var(--border);
+    }
+    .or-divider::before { left: 0; }
+    .or-divider::after { right: 0; }
+
+    /* ── LOGIN CTA ── */
+    .login-cta {
+      width: 100%;
+      max-width: 560px;
+      margin-top: 20px;
+      background: linear-gradient(135deg, rgba(79,70,229,.06) 0%, rgba(124,58,237,.06) 100%);
+      border: 1.5px solid rgba(79,70,229,.18);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .login-cta-text h4 { font-size: .95rem; font-weight: 700; margin-bottom: 4px; color: var(--primary); }
+    .login-cta-text p { font-family: var(--font-body); font-size: .82rem; color: var(--text-muted); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.8rem; }
+      .result-grid { grid-template-columns: 1fr; }
+      .result-header { flex-direction: column; align-items: flex-start; gap: 10px; padding: 20px; }
+      .result-body { padding: 20px; }
+      .search-card { padding: 22px; }
+      .help-strip { flex-direction: column; align-items: flex-start; }
+      .login-cta { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── TOP BAR ── -->
+  <header class="topbar">
+    <a href="index.html" class="topbar-brand">
+      <img src="images/logo.png" alt="Shree Clinic Logo" onerror="this.style.display='none'" />
+      <div class="topbar-brand-text">
+        <h3>Shree Neuro &amp; Dental</h3>
+        <p>Sambalpur, Odisha</p>
+      </div>
+    </a>
+    <div class="topbar-actions">
+      <a href="dashboard.html" class="topbar-btn" id="dashboardLink" style="display:none">
+        <i class="fa-solid fa-gauge-high"></i> My Dashboard
+      </a>
+      <a href="auth.html" class="topbar-btn primary" id="loginLink">
+        <i class="fa-solid fa-right-to-bracket"></i> Login
+      </a>
+      <a href="index.html" class="topbar-btn">
+        <i class="fa-solid fa-house"></i> Home
+      </a>
+    </div>
+  </header>
+
+  <!-- ── MAIN ── -->
+  <main class="main">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-badge">
+        <i class="fa-solid fa-calendar-check"></i>
+        Appointment Tracker
+      </div>
+      <h1>Check Your <span>Appointment</span> Status</h1>
+      <p>Enter your booking reference number or phone number to see live status — confirmed, pending, or cancelled.</p>
+    </div>
+
+    <!-- Search Card -->
+    <div class="search-card">
+      <h2><i class="fa-solid fa-magnifying-glass"></i> Find My Appointment</h2>
+      <p>Use your booking reference (e.g. <strong>SND-20260712-0001</strong>) or your phone number.</p>
+
+      <!-- Tabs -->
+      <div class="search-tabs">
+        <button class="search-tab active" id="tabRef" onclick="switchTab('ref')">
+          <i class="fa-solid fa-hashtag"></i> Reference No.
+        </button>
+        <button class="search-tab" id="tabPhone" onclick="switchTab('phone')">
+          <i class="fa-solid fa-phone"></i> Phone Number
+        </button>
+      </div>
+
+      <!-- Ref input -->
+      <div id="panelRef">
+        <div class="input-wrap">
+          <i class="fa-solid fa-hashtag icon"></i>
+          <input type="text" id="inputRef" placeholder="SND-20260712-0001"
+            autocomplete="off" spellcheck="false"
+            oninput="this.value=this.value.toUpperCase()"
+            onkeydown="if(event.key==='Enter')doSearch()" />
+        </div>
+      </div>
+
+      <!-- Phone input -->
+      <div id="panelPhone" style="display:none;">
+        <div class="input-wrap">
+          <i class="fa-solid fa-phone icon"></i>
+          <input type="tel" id="inputPhone" placeholder="+91 98765 43210"
+            autocomplete="off"
+            onkeydown="if(event.key==='Enter')doSearch()" />
+        </div>
+      </div>
+
+      <button class="search-btn" id="searchBtn" onclick="doSearch()">
+        <div class="spin"></div>
+        <span class="btn-text"><i class="fa-solid fa-search"></i> &nbsp;Check Status</span>
+      </button>
+    </div>
+
+    <!-- Result Section -->
+    <div id="resultSection"></div>
+
+    <!-- Help Strip -->
+    <div class="help-strip">
+      <div class="help-icon"><i class="fa-solid fa-headset"></i></div>
+      <div>
+        <h4>Need Help?</h4>
+        <p>Can't find your appointment? Contact the clinic directly.</p>
+        <div class="help-links">
+          <a href="https://wa.me/917008956183?text=Hello%2C+I+need+help+with+my+appointment" target="_blank" class="help-link wa">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+          </a>
+          <a href="tel:+919337388068" class="help-link phone">
+            <i class="fa-solid fa-phone"></i> +91 93373 88068
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login CTA -->
+    <div class="login-cta" id="loginCtaBox" style="display:none;">
+      <div class="login-cta-text">
+        <h4><i class="fa-solid fa-star" style="color:#f59e0b;margin-right:5px;"></i> Want the full experience?</h4>
+        <p>Login to see all your appointments, history, and get real-time updates.</p>
+      </div>
+      <a href="auth.html?return=dashboard.html" class="action-btn primary">
+        <i class="fa-solid fa-right-to-bracket"></i> Login / Register
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+  <script>
+    /* ──────────────────────────────────────────────────────────
+       FIREBASE INIT
+    ────────────────────────────────────────────────────────── */
+    let db = null;
+    try {
+      if (typeof FIREBASE_CONFIG !== 'undefined' && FIREBASE_CONFIG.apiKey) {
+        if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+        db = firebase.firestore();
+      }
+    } catch(e) { console.warn('[StatusPage] Firebase init error:', e); }
+
+    /* ── Auth state: show Dashboard link if logged in ── */
+    try {
+      if (db) {
+        firebase.auth().onAuthStateChanged(user => {
+          if (user) {
+            document.getElementById('dashboardLink').style.display = 'flex';
+            document.getElementById('loginLink').style.display = 'none';
+          }
+        });
+      }
+    } catch(e) {}
+
+    /* ──────────────────────────────────────────────────────────
+       TAB SWITCH
+    ────────────────────────────────────────────────────────── */
+    let activeTab = 'ref';
+    function switchTab(tab) {
+      activeTab = tab;
+      document.getElementById('panelRef').style.display   = tab === 'ref'   ? 'block' : 'none';
+      document.getElementById('panelPhone').style.display = tab === 'phone' ? 'block' : 'none';
+      document.getElementById('tabRef').classList.toggle('active',   tab === 'ref');
+      document.getElementById('tabPhone').classList.toggle('active', tab === 'phone');
+      document.getElementById('resultSection').innerHTML = '';
+      if (tab === 'ref') document.getElementById('inputRef').focus();
+      else               document.getElementById('inputPhone').focus();
+    }
+
+    /* ──────────────────────────────────────────────────────────
+       SEARCH
+    ────────────────────────────────────────────────────────── */
+    async function doSearch() {
+      const btn = document.getElementById('searchBtn');
+      const resultEl = document.getElementById('resultSection');
+
+      const query = activeTab === 'ref'
+        ? document.getElementById('inputRef').value.trim().toUpperCase()
+        : document.getElementById('inputPhone').value.trim().replace(/\s/g,'');
+
+      if (!query) {
+        shake(activeTab === 'ref' ? 'inputRef' : 'inputPhone');
+        return;
+      }
+
+      btn.classList.add('loading');
+      btn.disabled = true;
+      resultEl.innerHTML = '';
+
+      try {
+        let found = null;
+
+        if (activeTab === 'ref') {
+          found = await searchByRef(query);
+        } else {
+          found = await searchByPhone(query);
+        }
+
+        if (found && found.length > 0) {
+          renderResults(found);
+        } else {
+          renderNotFound(query);
+        }
+      } catch(e) {
+        console.error(e);
+        renderError();
+      } finally {
+        btn.classList.remove('loading');
+        btn.disabled = false;
+      }
+    }
+
+    /* ──────────────────────────────────────────────────────────
+       SEARCH BY REFERENCE
+    ────────────────────────────────────────────────────────── */
+    async function searchByRef(ref) {
+      let results = [];
+
+      // 1. Firebase
+      if (db) {
+        try {
+          const snap = await db.collection('appointments').where('ref','==',ref).get();
+          if (!snap.empty) {
+            snap.docs.forEach(doc => results.push(unify(doc.id, doc.data())));
+          }
+          // Also try doc ID search if ref field not found
+          if (!results.length) {
+            const byId = await db.collection('appointments').doc(ref).get();
+            if (byId.exists) results.push(unify(byId.id, byId.data()));
+          }
+        } catch(e) { console.warn('[Search] Firebase error:', e); }
+      }
+
+      // 2. localStorage fallback
+      if (!results.length) {
+        const local = getLocalAppts();
+        const match = local.filter(a => (a.ref||'').toUpperCase() === ref);
+        results = match.map(a => unify(a.ref, a));
+      }
+
+      return results;
+    }
+
+    /* ──────────────────────────────────────────────────────────
+       SEARCH BY PHONE
+    ────────────────────────────────────────────────────────── */
+    async function searchByPhone(phone) {
+      const clean = phone.replace(/\D/g,'');
+      const ten   = clean.slice(-10);
+      const with91 = '+91' + ten;
+      let results = [];
+      const map = new Map();
+
+      if (db) {
+        try {
+          const queries = [
+            db.collection('appointments').where('patientPhone','==',ten).get(),
+            db.collection('appointments').where('patientPhone','==',with91).get(),
+            db.collection('appointments').where('phone','==',ten).get(),
+            db.collection('appointments').where('phone','==',with91).get(),
+            db.collection('appointments').where('patientPhone','==',phone).get(),
+          ];
+          const snaps = await Promise.allSettled(queries);
+          snaps.forEach(r => {
+            if (r.status === 'fulfilled') {
+              r.value.docs.forEach(doc => {
+                const unified = unify(doc.id, doc.data());
+                if (!map.has(unified.ref)) map.set(unified.ref, unified);
+              });
+            }
+          });
+          results = Array.from(map.values());
+        } catch(e) { console.warn('[Search] Firebase phone error:', e); }
+      }
+
+      // localStorage
+      if (!results.length) {
+        const local = getLocalAppts();
+        local.forEach(a => {
+          const ap = (a.patientPhone||a.phone||'').replace(/\D/g,'').slice(-10);
+          if (ap === ten) {
+            const unified = unify(a.ref, a);
+            if (!map.has(unified.ref)) map.set(unified.ref, unified);
+          }
+        });
+        results = Array.from(map.values());
+      }
+
+      return results.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }
+
+    /* ──────────────────────────────────────────────────────────
+       NORMALIZE APPOINTMENT OBJECT
+    ────────────────────────────────────────────────────────── */
+    function unify(id, a) {
+      return {
+        ref:           a.ref || id || '—',
+        department:    a.department || a.dept || 'neuro',
+        doctor:        a.doctor || a.doctorName || 'Dr. Mahesh Kumar Kusta',
+        date:          a.date || '—',
+        dateLabel:     a.dateLabel || a.date || '—',
+        slot:          a.slot || a.time || '—',
+        patientName:   a.patientName || a.name || '—',
+        patientPhone:  a.patientPhone || a.phone || '—',
+        patientAge:    a.patientAge || a.age || '—',
+        patientGender: a.patientGender || a.gender || '—',
+        symptoms:      a.symptoms || a.notes || '',
+        status:        (a.status || 'pending').toLowerCase(),
+        createdAt:     a.createdAt || a.created || new Date().toISOString(),
+        source:        a.source || 'web'
+      };
+    }
+
+    function getLocalAppts() {
+      const a = JSON.parse(localStorage.getItem('sndc_appointments') || '[]');
+      const b = JSON.parse(localStorage.getItem('shree_appointments') || '[]');
+      return [...a, ...b];
+    }
+
+    /* ──────────────────────────────────────────────────────────
+       RENDER RESULTS
+    ────────────────────────────────────────────────────────── */
+    function renderResults(appts) {
+      const el = document.getElementById('resultSection');
+      el.innerHTML = appts.map(a => buildResultCard(a)).join('');
+      document.getElementById('loginCtaBox').style.display = 'flex';
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function buildResultCard(a) {
+      const s = a.status;
+      const cfg = {
+        confirmed: { icon: 'fa-circle-check',    emoji: '✅', label: 'CONFIRMED', sub: 'Your appointment is confirmed! Please arrive 10 minutes early.' },
+        pending:   { icon: 'fa-hourglass-half',  emoji: '⏳', label: 'PENDING',   sub: 'Waiting for doctor review. You will be notified soon.' },
+        cancelled: { icon: 'fa-circle-xmark',    emoji: '❌', label: 'CANCELLED', sub: 'This appointment has been cancelled.' },
+        completed: { icon: 'fa-calendar-check',  emoji: '✔️', label: 'COMPLETED',  sub: 'Thank you for visiting us!' }
+      };
+      const c = cfg[s] || cfg.pending;
+
+      const noticeMsg = {
+        confirmed: '✅ <strong>Great news!</strong> The doctor has confirmed your appointment. Please come to the clinic at the scheduled time. Carry a valid ID.',
+        pending:   '⏳ <strong>Under Review</strong> — Your request has been received. The doctor will review and confirm shortly. Please check back later or contact us via WhatsApp.',
+        cancelled: '❌ <strong>Appointment Cancelled</strong> — This appointment was not confirmed. Please book a new appointment or contact the clinic to know more.',
+        completed: '✔️ <strong>Visit Completed</strong> — Thank you for your visit. We hope your appointment was helpful. Book again anytime.'
+      };
+
+      const deptIcon = a.department === 'dental' ? '🦷' : '🧠';
+      const waMsg = encodeURIComponent(`Hello, I have a query regarding my appointment.\nRef: ${a.ref}\nName: ${a.patientName}\nDate: ${a.dateLabel}`);
+      const waUrl = `https://wa.me/917008956183?text=${waMsg}`;
+
+      const createdDate = a.createdAt ? new Date(a.createdAt).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' }) : '—';
+
+      return `
+        <div class="result-card" style="margin-bottom:20px;">
+
+          <!-- Status Header Band -->
+          <div class="result-header ${s}">
+            <div class="result-status-icon">
+              <i class="fa-solid ${c.icon}" style="color:#fff;"></i>
+            </div>
+            <div class="result-header-text">
+              <div class="result-status-label">Appointment Status</div>
+              <div class="result-status-value">${c.label}</div>
+              <div class="result-status-sub">${c.sub}</div>
+            </div>
+          </div>
+
+          <!-- Body -->
+          <div class="result-body">
+
+            <!-- Notice Box -->
+            <div class="notice-box ${s}">
+              <i class="fa-solid ${c.icon}"></i>
+              <div>${noticeMsg[s] || noticeMsg.pending}</div>
+            </div>
+
+            <!-- Details Grid -->
+            <div class="result-grid">
+              <div class="result-field full">
+                <div class="result-field-label"><i class="fa-solid fa-hashtag"></i> Booking Reference</div>
+                <div class="result-field-value" style="font-weight:700;font-size:1rem;letter-spacing:.04em;">${a.ref}</div>
+              </div>
+              <div class="result-field">
+                <div class="result-field-label"><i class="fa-solid fa-user"></i> Patient Name</div>
+                <div class="result-field-value">${a.patientName}</div>
+              </div>
+              <div class="result-field">
+                <div class="result-field-label"><i class="fa-solid fa-stethoscope"></i> Department</div>
+                <div class="result-field-value">${deptIcon} ${(a.department||'neuro').charAt(0).toUpperCase()+(a.department||'neuro').slice(1)}</div>
+              </div>
+              <div class="result-field full">
+                <div class="result-field-label"><i class="fa-solid fa-user-doctor"></i> Doctor</div>
+                <div class="result-field-value">${a.doctor}</div>
+              </div>
+              <div class="result-field">
+                <div class="result-field-label"><i class="fa-solid fa-calendar"></i> Date</div>
+                <div class="result-field-value">${a.dateLabel}</div>
+              </div>
+              <div class="result-field">
+                <div class="result-field-label"><i class="fa-solid fa-clock"></i> Time Slot</div>
+                <div class="result-field-value">${a.slot}</div>
+              </div>
+              ${a.patientAge && a.patientAge !== '—' ? `
+              <div class="result-field">
+                <div class="result-field-label"><i class="fa-solid fa-cake-candles"></i> Age</div>
+                <div class="result-field-value">${a.patientAge} yrs</div>
+              </div>` : ''}
+              ${a.patientGender && a.patientGender !== '—' ? `
+              <div class="result-field">
+                <div class="result-field-label"><i class="fa-solid fa-venus-mars"></i> Gender</div>
+                <div class="result-field-value">${a.patientGender}</div>
+              </div>` : ''}
+              ${a.symptoms ? `
+              <div class="result-field full">
+                <div class="result-field-label"><i class="fa-solid fa-notes-medical"></i> Symptoms / Notes</div>
+                <div class="result-field-value">${a.symptoms}</div>
+              </div>` : ''}
+              <div class="result-field full">
+                <div class="result-field-label"><i class="fa-solid fa-circle-info"></i> Booked On</div>
+                <div class="result-field-value" style="color:var(--text-muted);font-size:.82rem;">${createdDate}</div>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="result-actions">
+              <a href="${waUrl}" target="_blank" class="action-btn wa">
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp Clinic
+              </a>
+              <button class="action-btn" onclick="doSearch()">
+                <i class="fa-solid fa-rotate-right"></i> Refresh Status
+              </button>
+              ${s === 'pending' || s === 'confirmed' ? `
+              <a href="appointment.html" class="action-btn">
+                <i class="fa-solid fa-calendar-plus"></i> New Appointment
+              </a>` : `
+              <a href="appointment.html" class="action-btn primary">
+                <i class="fa-solid fa-calendar-plus"></i> Book Again
+              </a>`}
+            </div>
+          </div>
+        </div>`;
+    }
+
+    /* ──────────────────────────────────────────────────────────
+       NOT FOUND / ERROR STATES
+    ────────────────────────────────────────────────────────── */
+    function renderNotFound(q) {
+      document.getElementById('resultSection').innerHTML = `
+        <div class="state-card">
+          <span class="state-icon">🔍</span>
+          <h3>No Appointment Found</h3>
+          <p>
+            We could not find any appointment for <strong>${q}</strong>.<br><br>
+            Please check the reference number carefully (format: <strong>SND-YYYYMMDD-XXXX</strong>)
+            or try your registered phone number.
+          </p>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+            <a href="https://wa.me/917008956183?text=Hello%2C+I+cannot+find+my+appointment+for+${encodeURIComponent(q)}" target="_blank" class="action-btn wa">
+              <i class="fa-brands fa-whatsapp"></i> Contact Clinic via WhatsApp
+            </a>
+            <a href="appointment.html" class="action-btn primary">
+              <i class="fa-solid fa-calendar-plus"></i> Book New Appointment
+            </a>
+          </div>
+        </div>`;
+      document.getElementById('loginCtaBox').style.display = 'none';
+    }
+
+    function renderError() {
+      document.getElementById('resultSection').innerHTML = `
+        <div class="state-card">
+          <span class="state-icon">⚠️</span>
+          <h3>Something went wrong</h3>
+          <p>Unable to reach the server. Please check your internet connection and try again.</p>
+          <button class="action-btn primary" onclick="doSearch()">
+            <i class="fa-solid fa-rotate-right"></i> Try Again
+          </button>
+        </div>`;
+    }
+
+    /* ──────────────────────────────────────────────────────────
+       HELPERS
+    ────────────────────────────────────────────────────────── */
+    function shake(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.style.animation = 'none';
+      el.offsetHeight; // reflow
+      el.style.animation = 'shake .35s ease';
+      el.focus();
+    }
+
+    // Shake keyframes
+    const st = document.createElement('style');
+    st.textContent = `@keyframes shake {
+      0%,100%{transform:translateX(0)}
+      20%{transform:translateX(-6px)}
+      40%{transform:translateX(6px)}
+      60%{transform:translateX(-4px)}
+      80%{transform:translateX(4px)}
+    }`;
+    document.head.appendChild(st);
+
+    /* ── Auto-check if ref passed via URL ── */
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(location.search);
+      const ref = params.get('ref');
+      if (ref) {
+        document.getElementById('inputRef').value = ref.toUpperCase();
+        switchTab('ref');
+        doSearch();
+      }
+    });
+  </script>
+
+</body>
+</html>

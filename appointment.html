@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Appointment — Shree Neuro &amp; Dental Health Care, Sambalpur</title>
+  <meta name="description" content="Book your appointment online at Shree Neuro &amp; Dental Health Care, Sambalpur. Select your department, choose a date and time slot, and confirm your consultation easily." />
+  <link rel="canonical" href="https://shreeneurodentalcare.com/appointment.html" />
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/appointment.css" />
+  <link rel="stylesheet" href="css/chatbot.css" />
+  <script>(function(){const t=localStorage.getItem('shree_theme')||'light';document.documentElement.setAttribute('data-theme',t)})();</script>
+</head>
+<body>
+
+  <!-- ─── Page Loader ─── -->
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-logo">
+      <img src="images/logo.png" alt="Shree Clinic Logo" style="height:60px;margin-bottom:10px;" />
+      <div>Shree Neuro &amp; Dental</div>
+    </div>
+    <div class="loader-bar"><div class="loader-progress"></div></div>
+  </div>
+
+  <!-- ─── Scroll Progress ─── -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- ─── Top Bar ─── -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-contact">
+        <a href="tel:9337388068"><i class="fa-solid fa-phone"></i> +91 93373 88068</a>
+        <a href="https://wa.me/917008956183" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> +91 70089 56183</a>
+        <span><i class="fa-solid fa-location-dot"></i> Badabazar, Sambalpur, Odisha</span>
+      </div>
+      <div class="top-bar-notice">
+        <i class="fa-solid fa-clock"></i> Mon–Sat &nbsp;|&nbsp; 6:00 PM – 9:00 PM
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Navbar ─── -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="Shree Clinic Logo" />
+        <div class="nav-logo-text">
+          <span class="clinic-name">Shree Neuro &amp; Dental</span>
+          <span class="clinic-tagline">Health Care Center</span>
+        </div>
+      </a>
+      <nav class="nav-menu" id="navMenu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="doctors.html" class="nav-link">Our Doctors</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="appointment.html" class="nav-link nav-cta active">Book Appointment</a>
+      </nav>
+      <div class="nav-hamburger" id="navHamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── Page Header ─── -->
+  <section class="page-header">
+    <div class="container page-header-inner">
+      <span class="eyebrow"><i class="fa-solid fa-calendar-plus" style="margin-right:6px"></i>ONLINE BOOKING</span>
+      <h1>Book Your Appointment</h1>
+      <p>Schedule your consultation in just a few steps. Same-day confirmation by our clinic team.</p>
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span><i class="fa-solid fa-chevron-right"></i></span>
+        <span>Book Appointment</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── AI Chat Shortcut Banner ─── -->
+  <section style="padding:28px 0 0;">
+    <div class="container">
+      <div style="
+        background:linear-gradient(135deg,#0A3D6B 0%,#1A72C8 100%);
+        border-radius:20px;
+        padding:24px 28px;
+        display:flex;
+        align-items:center;
+        gap:20px;
+        flex-wrap:wrap;
+        margin-bottom:8px;
+        position:relative;
+        overflow:hidden;
+      ">
+        <div style="position:absolute;right:20px;font-size:3.5rem;opacity:0.1;">🤖</div>
+        <div style="flex:1;min-width:200px;">
+          <div style="font-family:Poppins,sans-serif;font-weight:700;font-size:1rem;color:white;margin-bottom:4px;">
+            ✨ Book faster with Shreya AI
+          </div>
+          <div style="font-family:Inter,sans-serif;font-size:0.82rem;color:rgba(255,255,255,0.75);">
+            Just type what you need — our AI assistant handles the entire booking in seconds.
+          </div>
+        </div>
+        <button
+          id="openAIChat"
+          onclick="if(window.ShreeChatWidgetInstance){ShreeChatWidgetInstance.open();setTimeout(()=>ShreeChatWidgetInstance._handleUserInput('I want to book an appointment'),500);}"
+          style="
+            padding:11px 22px;
+            border-radius:10px;
+            background:rgba(255,255,255,0.15);
+            border:1.5px solid rgba(255,255,255,0.35);
+            color:white;
+            font-family:Poppins,sans-serif;
+            font-weight:600;
+            font-size:0.875rem;
+            cursor:pointer;
+            transition:all 0.25s ease;
+            white-space:nowrap;
+            display:flex;
+            align-items:center;
+            gap:8px;
+          "
+          onmouseover="this.style.background='rgba(255,255,255,0.25)'"
+          onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+          <i class="fa-solid fa-comments"></i> Chat with AI
+        </button>
+        <div style="font-family:Inter,sans-serif;font-size:0.72rem;color:rgba(255,255,255,0.5);width:100%;margin-top:-8px;">
+          Or use the traditional form below ↓
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Appointment Wizard ─── -->
+  <section class="appt-wrapper" id="apptWrapper">
+    <div class="appt-container">
+
+      <!-- Progress Bar -->
+      <div class="appt-progress" id="progressWrap">
+        <div class="progress-track">
+          <div class="prog-step active" id="prog-1">
+            <div class="prog-dot"><i class="fa-solid fa-hospital-user"></i></div>
+            <span class="prog-label">Department</span>
+          </div>
+          <div class="prog-connector" id="line-1"></div>
+          <div class="prog-step" id="prog-2">
+            <div class="prog-dot"><i class="fa-solid fa-calendar-days"></i></div>
+            <span class="prog-label">Date &amp; Time</span>
+          </div>
+          <div class="prog-connector" id="line-2"></div>
+          <div class="prog-step" id="prog-3">
+            <div class="prog-dot"><i class="fa-solid fa-user-injured"></i></div>
+            <span class="prog-label">Your Details</span>
+          </div>
+          <div class="prog-connector" id="line-3"></div>
+          <div class="prog-step" id="prog-4">
+            <div class="prog-dot"><i class="fa-solid fa-circle-check"></i></div>
+            <span class="prog-label">Confirm</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─────── WIZARD CARD ─────── -->
+      <div class="appt-card" id="apptCard">
+
+        <!-- ── STEP 1: Department & Doctor ── -->
+        <div class="appt-step active" id="step-1">
+          <h2 class="step-heading">Choose Department &amp; Doctor</h2>
+          <p class="step-sub">Select the clinic department and preferred doctor for your consultation.</p>
+
+          <!-- Department Options -->
+          <div class="dept-selector">
+            <div class="dept-option" data-dept="neuro">
+              <div class="dept-check"><i class="fa-solid fa-check"></i></div>
+              <div class="dept-icon"><i class="fa-solid fa-brain"></i></div>
+              <div class="dept-name">Neurology &amp; Brain Surgery</div>
+              <div class="dept-desc">Brain, spine, stroke management, epilepsy &amp; neuro-endoscopy</div>
+            </div>
+            <div class="dept-option" data-dept="dental">
+              <div class="dept-check"><i class="fa-solid fa-check"></i></div>
+              <div class="dept-icon"><i class="fa-solid fa-tooth"></i></div>
+              <div class="dept-name">Dental &amp; Orthodontics</div>
+              <div class="dept-desc">Implants, braces, root canal, cosmetic &amp; restorative dentistry</div>
+            </div>
+          </div>
+
+          <!-- Doctor Selection (shown after dept pick) -->
+          <div class="doctor-selector" id="doctorSection" style="display:none;">
+            <span class="doctor-select-label">Select your preferred doctor</span>
+            <div class="doctor-cards" id="doctorCards"></div>
+          </div>
+
+          <div class="step-nav">
+            <span></span>
+            <button class="btn-step-next" id="next1">
+              Next — Select Date &amp; Time <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 2: Date & Time ── -->
+        <div class="appt-step" id="step-2">
+          <h2 class="step-heading">Select Date &amp; Time Slot</h2>
+          <p class="step-sub">Clinic hours: Monday – Saturday, 6:00 PM – 9:00 PM. Sundays are closed.</p>
+
+          <div class="date-time-grid">
+            <!-- Calendar -->
+            <div class="calendar-card">
+              <div class="cal-header">
+                <button class="cal-nav-btn" id="calPrev" type="button"><i class="fa-solid fa-chevron-left"></i></button>
+                <div class="cal-header-title" id="calTitle">—</div>
+                <button class="cal-nav-btn" id="calNext" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+              </div>
+              <div class="cal-grid">
+                <div class="cal-weekdays">
+                  <div class="cal-wd sunday">Su</div>
+                  <div class="cal-wd">Mo</div>
+                  <div class="cal-wd">Tu</div>
+                  <div class="cal-wd">We</div>
+                  <div class="cal-wd">Th</div>
+                  <div class="cal-wd">Fr</div>
+                  <div class="cal-wd">Sa</div>
+                </div>
+                <div class="cal-days" id="calDays"></div>
+              </div>
+            </div>
+
+            <!-- Time Slots -->
+            <div class="time-slots-card">
+              <div class="slots-header">
+                <i class="fa-solid fa-clock" style="margin-right:8px"></i>Available Time Slots
+              </div>
+              <div class="slots-body" id="slotsSection" style="display:none;">
+                <div class="slots-date-label" id="slotDateLabel"></div>
+                <div class="slots-grid" id="slotsGrid"></div>
+              </div>
+              <div id="slotsNoDate" class="no-date-msg" style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+                <i class="fa-regular fa-calendar-days" style="font-size:2rem;opacity:0.4;"></i>
+                <span>Please select a date on the calendar to see available time slots.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-nav">
+            <button class="btn-step-back" id="back2" type="button">
+              <i class="fa-solid fa-arrow-left"></i> Back
+            </button>
+            <button class="btn-step-next" id="next2">
+              Next — Your Details <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 3: Patient Details ── -->
+        <div class="appt-step" id="step-3">
+          <h2 class="step-heading">Patient Information</h2>
+          <p class="step-sub">Please fill in accurate details so our clinic team can confirm your booking.</p>
+
+          <div class="form-grid-2">
+            <!-- First Name -->
+            <div class="appt-form-group">
+              <label class="appt-label" for="firstName">First Name <span class="req">*</span></label>
+              <input type="text" id="firstName" class="appt-input" placeholder="e.g. Rajesh" autocomplete="given-name" />
+              <span class="field-error" id="err-firstName"></span>
+            </div>
+            <!-- Last Name -->
+            <div class="appt-form-group">
+              <label class="appt-label" for="lastName">Last Name <span class="req">*</span></label>
+              <input type="text" id="lastName" class="appt-input" placeholder="e.g. Kumar" autocomplete="family-name" />
+              <span class="field-error" id="err-lastName"></span>
+            </div>
+            <!-- Phone -->
+            <div class="appt-form-group">
+              <label class="appt-label" for="phone">Mobile Number <span class="req">*</span></label>
+              <input type="tel" id="phone" class="appt-input" placeholder="+91 99999 99999" autocomplete="tel" />
+              <span class="field-error" id="err-phone"></span>
+            </div>
+            <!-- Email -->
+            <div class="appt-form-group">
+              <label class="appt-label" for="email">Email Address</label>
+              <input type="email" id="email" class="appt-input" placeholder="Optional" autocomplete="email" />
+              <span class="field-error" id="err-email"></span>
+            </div>
+            <!-- Age -->
+            <div class="appt-form-group">
+              <label class="appt-label" for="age">Age <span class="req">*</span></label>
+              <input type="number" id="age" class="appt-input" placeholder="e.g. 35" min="1" max="120" />
+              <span class="field-error" id="err-age"></span>
+            </div>
+            <!-- Gender -->
+            <div class="appt-form-group">
+              <label class="appt-label">Gender <span class="req">*</span></label>
+              <div class="gender-group">
+                <label class="gender-option" data-gender="Male">
+                  <input type="radio" name="gender" value="Male" />
+                  <i class="fa-solid fa-mars"></i> Male
+                </label>
+                <label class="gender-option" data-gender="Female">
+                  <input type="radio" name="gender" value="Female" />
+                  <i class="fa-solid fa-venus"></i> Female
+                </label>
+                <label class="gender-option" data-gender="Other">
+                  <input type="radio" name="gender" value="Other" />
+                  Other
+                </label>
+              </div>
+              <span class="field-error" id="err-gender"></span>
+            </div>
+            <!-- Symptoms -->
+            <div class="appt-form-group full" style="grid-column:1/-1">
+              <label class="appt-label" for="symptoms">Chief Complaint / Symptoms</label>
+              <textarea id="symptoms" class="appt-textarea" rows="4"
+                placeholder="Briefly describe your symptoms, health concern, or reason for visit (e.g. severe headache for 3 days, tooth pain, spine issue...)"></textarea>
+            </div>
+          </div>
+
+          <div class="step-nav">
+            <button class="btn-step-back" id="back3" type="button">
+              <i class="fa-solid fa-arrow-left"></i> Back
+            </button>
+            <button class="btn-step-next" id="next3">
+              Review Appointment <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 4: Review & Confirm ── -->
+        <div class="appt-step" id="step-4">
+          <h2 class="step-heading">Review &amp; Confirm</h2>
+          <p class="step-sub">Please verify all details before confirming your appointment. Our team will contact you to reconfirm.</p>
+
+          <div class="review-card">
+            <div class="review-card-header">
+              <div class="clinic-logo-sm">🏥</div>
+              <div>
+                <h3>Shree Neuro &amp; Dental Health Care</h3>
+                <p>Badabazar, Khetrajpur, Sambalpur, Odisha 768003</p>
+              </div>
+            </div>
+            <div class="review-grid">
+              <div class="review-item">
+                <div class="label"><i class="fa-solid fa-hospital" style="margin-right:4px;opacity:.7"></i>Department</div>
+                <div class="value" id="rv-dept">—</div>
+              </div>
+              <div class="review-item">
+                <div class="label"><i class="fa-solid fa-user-doctor" style="margin-right:4px;opacity:.7"></i>Doctor</div>
+                <div class="value" id="rv-doctor">—</div>
+              </div>
+              <div class="review-item">
+                <div class="label"><i class="fa-solid fa-calendar" style="margin-right:4px;opacity:.7"></i>Date</div>
+                <div class="value" id="rv-date">—</div>
+              </div>
+              <div class="review-item">
+                <div class="label"><i class="fa-solid fa-clock" style="margin-right:4px;opacity:.7"></i>Time Slot</div>
+                <div class="value" id="rv-slot">—</div>
+              </div>
+              <div class="review-item">
+                <div class="label"><i class="fa-solid fa-user" style="margin-right:4px;opacity:.7"></i>Patient Name</div>
+                <div class="value" id="rv-name">—</div>
+              </div>
+              <div class="review-item">
+                <div class="label"><i class="fa-solid fa-phone" style="margin-right:4px;opacity:.7"></i>Phone</div>
+                <div class="value" id="rv-phone">—</div>
+              </div>
+              <div class="review-item">
+                <div class="label"><i class="fa-regular fa-envelope" style="margin-right:4px;opacity:.7"></i>Email</div>
+                <div class="value" id="rv-email">—</div>
+              </div>
+              <div class="review-item">
+                <div class="label"><i class="fa-solid fa-user-clock" style="margin-right:4px;opacity:.7"></i>Age / Gender</div>
+                <div class="value"><span id="rv-age">—</span> · <span id="rv-gender">—</span></div>
+              </div>
+            </div>
+            <div class="review-symptoms" id="rv-symptoms"></div>
+          </div>
+
+          <!-- Terms -->
+          <label class="terms-checkbox" for="termsCheck">
+            <input type="checkbox" id="termsCheck" />
+            <span class="terms-text">
+              I confirm that all the above information is accurate. I understand that my booking request will be reviewed by the clinic team and a confirmation will be sent to me via phone or WhatsApp within 24 hours. By submitting this form, I agree to the clinic's <a href="terms.html" target="_blank" style="color:var(--clr-primary)">Terms &amp; Conditions</a>.
+            </span>
+          </label>
+
+          <div class="step-nav">
+            <button class="btn-step-back" id="back4" type="button">
+              <i class="fa-solid fa-arrow-left"></i> Edit Details
+            </button>
+            <button class="btn-step-next btn-confirm" id="confirmBtn">
+              <i class="fa-solid fa-calendar-check"></i> Confirm My Appointment
+            </button>
+          </div>
+        </div>
+
+      </div><!-- /appt-card -->
+
+      <!-- ── SUCCESS SCREEN ── -->
+      <div class="appt-success" id="successScreen">
+        <div class="success-circle"><i class="fa-solid fa-check"></i></div>
+
+        <h2 style="font-family:var(--font-display);color:var(--clr-primary);font-size:2rem;margin-bottom:8px;">
+          Appointment Booked!
+        </h2>
+        <p style="color:var(--clr-text-muted);font-size:1rem;max-width:500px;margin:0 auto 16px;">
+          Your booking request has been received. Our clinic desk will contact you to confirm your slot.
+        </p>
+
+        <div class="success-id">
+          <i class="fa-solid fa-hashtag" style="opacity:.6;font-size:.9em"></i>
+          <span id="sc-id">SND-XXXXXXXX-0001</span>
+          <button onclick="navigator.clipboard.writeText(document.getElementById('sc-id').textContent)"
+            style="background:none;border:none;cursor:pointer;color:var(--clr-accent);font-size:.9rem;"
+            title="Copy Booking ID">
+            <i class="fa-regular fa-copy"></i>
+          </button>
+        </div>
+
+        <div class="success-info-grid">
+          <div class="success-info-item">
+            <div class="si-label"><i class="fa-solid fa-user" style="margin-right:4px"></i>Patient</div>
+            <div class="si-val" id="sc-name">—</div>
+          </div>
+          <div class="success-info-item">
+            <div class="si-label"><i class="fa-solid fa-hospital" style="margin-right:4px"></i>Department</div>
+            <div class="si-val" id="sc-dept">—</div>
+          </div>
+          <div class="success-info-item">
+            <div class="si-label"><i class="fa-solid fa-calendar" style="margin-right:4px"></i>Date</div>
+            <div class="si-val" id="sc-date">—</div>
+          </div>
+          <div class="success-info-item">
+            <div class="si-label"><i class="fa-solid fa-clock" style="margin-right:4px"></i>Time Slot</div>
+            <div class="si-val" id="sc-slot">—</div>
+          </div>
+          <div class="success-info-item">
+            <div class="si-label"><i class="fa-solid fa-user-doctor" style="margin-right:4px"></i>Doctor</div>
+            <div class="si-val" id="sc-doctor">—</div>
+          </div>
+          <div class="success-info-item">
+            <div class="si-label"><i class="fa-solid fa-location-dot" style="margin-right:4px"></i>Location</div>
+            <div class="si-val">Badabazar, Sambalpur</div>
+          </div>
+        </div>
+
+        <div style="background:rgba(232,160,32,0.1);border:1px solid rgba(232,160,32,0.25);border-radius:12px;padding:14px 20px;max-width:500px;margin:0 auto 24px;font-size:0.88rem;color:#7A5200;display:flex;gap:10px;align-items:flex-start;">
+          <i class="fa-solid fa-triangle-exclamation" style="color:#E8A020;margin-top:2px;flex-shrink:0"></i>
+          <span>Please keep your <strong>Booking ID</strong> handy. Our team will call or WhatsApp you within a few hours to confirm the exact time slot.</span>
+        </div>
+
+        <div class="success-actions">
+          <a id="sc-whatsapp" href="#" target="_blank" rel="noopener" class="btn btn-accent btn-lg">
+            <i class="fa-brands fa-whatsapp"></i> Share on WhatsApp
+          </a>
+          <button class="btn btn-primary btn-lg" id="newApptBtn">
+            <i class="fa-solid fa-plus"></i> Book Another
+          </button>
+          <a href="index.html" class="btn btn-outline-primary">
+            <i class="fa-solid fa-home"></i> Go Home
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /appt-container -->
+  </section>
+
+  <!-- ─── Info Strip ─── -->
+  <section class="section-alt" style="padding:var(--space-2xl) 0;background:var(--clr-bg-alt);">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-xl);text-align:center;">
+        <div>
+          <div style="font-size:1.8rem;margin-bottom:8px;"><i class="fa-solid fa-shield-halved" style="color:var(--clr-accent)"></i></div>
+          <div style="font-weight:700;font-family:var(--font-heading);color:var(--clr-primary)">Secure Booking</div>
+          <div style="font-size:0.82rem;color:var(--clr-text-muted);margin-top:4px">Your data is stored securely and never shared</div>
+        </div>
+        <div>
+          <div style="font-size:1.8rem;margin-bottom:8px;"><i class="fa-solid fa-phone-volume" style="color:var(--clr-accent)"></i></div>
+          <div style="font-weight:700;font-family:var(--font-heading);color:var(--clr-primary)">Quick Confirmation</div>
+          <div style="font-size:0.82rem;color:var(--clr-text-muted);margin-top:4px">Our team confirms your slot within hours</div>
+        </div>
+        <div>
+          <div style="font-size:1.8rem;margin-bottom:8px;"><i class="fa-solid fa-clock-rotate-left" style="color:var(--clr-accent)"></i></div>
+          <div style="font-weight:700;font-family:var(--font-heading);color:var(--clr-primary)">Flexible Slots</div>
+          <div style="font-size:0.82rem;color:var(--clr-text-muted);margin-top:4px">Evening slots Mon–Sat from 6 PM to 9 PM</div>
+        </div>
+        <div>
+          <div style="font-size:1.8rem;margin-bottom:8px;"><i class="fa-brands fa-whatsapp" style="color:var(--clr-accent)"></i></div>
+          <div style="font-weight:700;font-family:var(--font-heading);color:var(--clr-primary)">WhatsApp Support</div>
+          <div style="font-size:0.82rem;color:var(--clr-text-muted);margin-top:4px">Chat with us directly on <a href="https://wa.me/917008956183" style="color:var(--clr-primary)">WhatsApp</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Footer ─── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo">
+            <img src="images/logo.png" alt="Shree Logo" />
+            <div class="footer-logo-text">
+              <span class="footer-name" style="color:white;display:block;">Shree Clinic</span>
+              <span class="footer-tagline">Neuro &amp; Dental Care</span>
+            </div>
+          </a>
+          <p class="footer-about">
+            A premium multidisciplinary medical clinic offering global-standard neurosurgery and advanced dentistry treatments in Sambalpur, Odisha.
+          </p>
+          <div class="social-links">
+            <a href="https://www.facebook.com/p/Dr-Mahesh-Kumar-Kusta-Neurosurgeon-100076633800234/" class="social-link" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="mailto:roshankumar.iitb28@gmail.com" class="social-link"><i class="fa-regular fa-envelope"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Departments</h4>
+          <ul class="footer-links">
+            <li><a href="services.html#neurology"><i class="fa-solid fa-angle-right"></i> Neurology Clinic</a></li>
+            <li><a href="services.html#stroke"><i class="fa-solid fa-angle-right"></i> Stroke Management</a></li>
+            <li><a href="services.html#dental"><i class="fa-solid fa-angle-right"></i> Dental &amp; Implants</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="about.html"><i class="fa-solid fa-angle-right"></i> About Clinic</a></li>
+            <li><a href="doctors.html"><i class="fa-solid fa-angle-right"></i> Our Doctors</a></li>
+            <li><a href="gallery.html"><i class="fa-solid fa-angle-right"></i> Gallery</a></li>
+            <li><a href="contact.html"><i class="fa-solid fa-angle-right"></i> Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Working Hours</h4>
+          <table class="hours-table">
+            <tr><td>Mon - Sat</td><td>6:00 PM - 9:00 PM</td></tr>
+            <tr class="closed"><td>Sunday</td><td>Closed</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Shree Neuro &amp; Dental Health Care. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms &amp; Conditions</a>
+          <a href="admin/index.html" style="opacity:0.4;font-size:0.75rem">Admin</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating CTAs -->
+  <a href="https://wa.me/917008956183" class="whatsapp-float" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i></a>
+  <button class="scroll-top" id="scrollTop"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/main.js"></script>
+  <script src="js/config.js"></script>
+  <!-- Firebase Compat SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="js/appointment.js"></script>
+  <!-- AI Chatbot Widget -->
+  <script src="js/config.js"></script>
+  <script src="js/knowledge-base.js"></script>
+  <script src="js/ai-notifications.js"></script>
+  <script src="js/ai-chatbot.js"></script>
+  <script src="js/chat-widget.js"></script>
+  <script src="js/ai-auth.js"></script>
+</body>
+</html>
